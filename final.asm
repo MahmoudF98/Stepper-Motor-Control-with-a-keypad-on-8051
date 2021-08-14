@@ -266,4 +266,4 @@ ISR:		// Interrupt service routine
 	MOV R7,#01H		// Stopping the stepper motor
 	RET		// Jumps to RETI
 
-END // End of the fucking program
+END // End of program
