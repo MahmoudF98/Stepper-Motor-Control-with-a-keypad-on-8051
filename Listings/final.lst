@@ -1,0 +1,351 @@
+A51 MACRO ASSEMBLER  FINAL                                                                12/17/2019 01:10:15 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\final.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE final.asm SET(SMALL) DEBUG PRINT(.\Listings\final.lst) OBJECT(.\Objects
+                      \final.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 00H          
+0000 8004              2     SJMP MAIN                
+                       3     
+0003                   4     ORG 003H                 
+0003 316F              5     ACALL ISR                
+0005 32                6     RETI             
+                       7      
+0006                   8     MAIN:
+                       9     
+0006 D288             10     SETB TCON.0              
+0008 D2A8             11     SETB IE.0                
+000A D2AF             12     SETB IE.7                
+                      13     
+000C 7F00             14     MOV R7,#00H              
+                      15     
+000E 758007           16     MOV P0,#07H              
+                      17     
+0011                  18     READP0:
+0011 E580             19             MOV A,P0                 
+0013 13               20             RRC A            
+0014 4039             21             JC NXT1          
+                      22             
+0016                  23     SWITCH1:                 
+0016 BF0032           24             CJNE R7,#00H,AGAIN               
+                      25             
+0019 11FA             26             ACALL DELAY
+001B 7902             27             MOV R1,#02H
+001D 89A0             28             MOV P2,R1
+001F 11FA             29             ACALL DELAY
+                      30             
+0021 7903             31             MOV R1,#03H             
+0023 89A0             32             MOV P2,R1
+0025 11FA             33             ACALL DELAY
+                      34             
+0027 7901             35             MOV R1,#01H
+0029 89A0             36             MOV P2,R1
+002B 11FA             37             ACALL DELAY
+                      38             
+002D 7909             39             MOV R1,#09H
+002F 89A0             40             MOV P2,R1
+0031 11FA             41             ACALL DELAY
+                      42             
+0033 7908             43             MOV R1,#08H
+0035 89A0             44             MOV P2,R1
+0037 11FA             45             ACALL DELAY
+                      46             
+0039 790C             47             MOV R1,#0CH
+003B 89A0             48             MOV P2,R1
+003D 11FA             49             ACALL DELAY
+                      50             
+003F 7904             51             MOV R1,#04H
+0041 89A0             52             MOV P2,R1
+0043 11FA             53             ACALL DELAY
+                      54             
+0045 7906             55             MOV R1,#06H
+0047 89A0             56             MOV P2,R1
+                      57             
+A51 MACRO ASSEMBLER  FINAL                                                                12/17/2019 01:10:15 PAGE     2
+
+0049 80CB             58             SJMP SWITCH1
+                      59             
+004B                  60     AGAIN:           
+004B 7F00             61             MOV R7,#00H     
+004D 80C2             62         SJMP READP0          
+                      63     
+004F                  64     NXT1:            
+004F 13               65             RRC A            
+0050 401D             66             JC NXT2          
+                      67             
+0052                  68     SWITCH2:                 
+0052 BF00F6           69             CJNE R7,#00H,AGAIN               
+                      70             
+0055 11FA             71             ACALL DELAY
+                      72             
+0057 7903             73             MOV R1,#03H
+0059 89A0             74             MOV P2,R1
+005B 11FA             75             ACALL DELAY
+                      76     
+005D 7909             77             MOV R1,#09H
+005F 89A0             78             MOV P2,R1
+0061 11FA             79             ACALL DELAY
+                      80     
+0063 790C             81             MOV R1,#0CH
+0065 89A0             82             MOV P2,R1
+0067 11FA             83             ACALL DELAY
+                      84     
+0069 7906             85             MOV R1,#06H
+006B 89A0             86             MOV P2,R1       
+006D 80E3             87             SJMP SWITCH2
+                      88     
+006F                  89     NXT2:            
+006F 13               90             RRC A            
+0070 409F             91             JC READP0                
+                      92             
+0072                  93     SWITCH3:                 
+0072 7900             94             MOV R1,#0D               
+0074 7A00             95             MOV R2,#0D               
+0076 3111             96             ACALL GETKEY     
+                      97             
+0078                  98     CHECK:
+0078 B40A64           99             CJNE A,#10D,FORMNUM              
+                     100     
+007B                 101     ANGLE0: 
+007B B90008          102             CJNE R1,#0D,ANGLE45                      
+007E BA0005          103             CJNE R2,#0H,ANGLE45
+0081 75A006          104             MOV P2,#06H
+0084 808B            105             SJMP READP0
+0086                 106     ANGLE45:
+0086 B92D08          107         CJNE R1,#45D,ANGLE90                 
+0089 BA0005          108             CJNE R2,#0H,ANGLE90
+008C 75A002          109             MOV P2,#02H
+008F 8080            110             SJMP READP0     
+0091                 111     ANGLE90:
+0091 B95A08          112         CJNE R1,#90D,ANGLE135                
+0094 BA0005          113             CJNE R2,#0H,ANGLE135
+0097 75A003          114             MOV P2,#03H
+009A 0111            115             AJMP READP0
+009C                 116     ANGLE135:
+009C B98708          117         CJNE R1,#135D,ANGLE180               
+009F BA0005          118             CJNE R2,#0H,ANGLE180
+00A2 75A001          119             MOV P2,#01H
+00A5 0111            120             AJMP READP0
+00A7                 121     ANGLE180:
+00A7 B9B408          122         CJNE R1,#180D,ANGLE225               
+00AA BA0005          123             CJNE R2,#0H,ANGLE225
+A51 MACRO ASSEMBLER  FINAL                                                                12/17/2019 01:10:15 PAGE     3
+
+00AD 75A009          124             MOV P2,#09H
+00B0 0111            125             AJMP READP0
+00B2                 126     ANGLE225:
+00B2 B9E108          127         CJNE R1,#225D,ANGLE270               
+00B5 BA0005          128             CJNE R2,#0H,ANGLE270
+00B8 75A008          129             MOV P2,#08H
+00BB 0111            130             AJMP READP0             
+00BD                 131     ANGLE270:
+00BD B90E08          132         CJNE R1,#0EH,ANGLE315                
+00C0 BA0105          133             CJNE R2,#01H,ANGLE315
+00C3 75A00C          134             MOV P2,#0CH
+00C6 0111            135             AJMP READP0
+00C8                 136     ANGLE315:
+00C8 B93B08          137         CJNE R1,#3BH,ABOVE           
+00CB BA0105          138             CJNE R2,#1H,ABOVE
+00CE 75A004          139             MOV P2,#04H
+00D1 0111            140             AJMP READP0
+00D3                 141     ABOVE:           
+00D3 E9              142         MOV A,R1
+00D4 C2D7            143             CLR PSW.7                
+00D6 9468            144             SUBB A,#68H              
+00D8 F9              145             MOV R1,A                 
+00D9 EA              146             MOV A,R2                
+00DA 9401            147             SUBB A,#01H              
+00DC FA              148             MOV R2,A                 
+00DD 809C            149             SJMP ANGLE0              
+                     150     
+                     151     
+                     152     
+00DF                 153     FORMNUM:
+00DF F8              154             MOV R0,A
+00E0 E9              155             MOV A,R1
+00E1 75F00A          156             MOV B,#10D
+00E4 A4              157             MUL AB
+00E5 F9              158             MOV R1,A
+00E6 ABF0            159             MOV R3,B
+00E8 EA              160             MOV A,R2
+00E9 75F00A          161             MOV B,#10D
+00EC A4              162             MUL AB
+00ED 2B              163             ADD A,R3
+00EE FA              164             MOV R2,A
+00EF E9              165         MOV A,R1
+00F0 28              166             ADD A,R0
+00F1 F9              167             MOV R1,A
+00F2 EA              168             MOV A,R2
+00F3 3400            169             ADDC A,#0D
+00F5 FA              170             MOV R2,A
+                     171     
+00F6 3111            172             ACALL GETKEY             
+00F8 0178            173             AJMP CHECK               
+                     174     
+00FA                 175     DELAY:           
+00FA 7C0A            176             MOV R4,#10D              
+00FC                 177             BACK:
+00FC 758901          178                     MOV TMOD ,#01H           
+00FF 758C3C          179                     MOV TH0 ,#03CH           
+0102 758AB0          180                     MOV TL0 ,#0B0H           
+0105 D28C            181                     SETB TCON.4              
+0107 308DFD          182                     L1:JNB TCON.5,L1  
+010A C28C            183                     CLR TCON.4               
+010C C28D            184                     CLR TCON.5               
+010E DCEC            185                     DJNZ R4 ,BACK  
+0110 22              186             RET  
+                     187             
+                     188     
+0111                 189     GETKEY:
+A51 MACRO ASSEMBLER  FINAL                                                                12/17/2019 01:10:15 PAGE     4
+
+                     190     
+                     191     
+0111 7590FF          192     MOV P1,#11111111B  
+                     193     
+0114                 194     COLMN0:
+0114 D296            195             SETB P1.6                
+0116 C294            196             CLR P1.4                 
+0118 7800            197                     MOV R0,#0D               
+011A 7D01            198                     MOV R5,#1D               
+011C 8014            199                 SJMP ROWS            
+                     200     
+011E                 201     COLMN1:
+011E D294            202                     SETB P1.4
+0120 C295            203             CLR P1.5 
+0122 7801            204                     MOV R0,#1D
+0124 7D02            205                     MOV R5,#2D
+0126 800A            206                 SJMP ROWS 
+                     207                     
+0128                 208     COLMN2:
+0128 D295            209                     SETB P1.5
+012A C296            210             CLR P1.6
+012C 7802            211                     MOV R0,#2D
+012E 7D00            212                     MOV R5,#0D
+0130 8000            213                 SJMP ROWS           
+                     214                     
+0132                 215     ROWS:
+0132                 216              ROW0:
+0132 209004          217                      JB P1.0,ROW1            
+0135 7A00            218                      MOV R2,#0D                      
+0137 8021            219                      SJMP FOUND                      
+                     220     
+0139                 221              ROW1:
+0139 209104          222                      JB P1.1,ROW2
+013C 7A01            223                      MOV R2,#1D
+013E 801A            224                      SJMP FOUND
+                     225     
+0140                 226              ROW2:
+0140 209204          227                      JB P1.2,ROW3
+0143 7A02            228                      MOV R2,#2D
+0145 8013            229                      SJMP FOUND
+                     230     
+0147                 231              ROW3:
+0147 209304          232                      JB P1.3,NEXT            
+014A 7A03            233                      MOV R2,#3D
+014C 800C            234                      SJMP FOUND
+                     235              
+014E                 236     NEXT:            
+014E                 237              C0:
+014E BD0002          238                      CJNE R5,#0D,C1          
+0151 80C1            239                      SJMP COLMN0
+0153                 240          C1:
+0153 BD0102          241                      CJNE R5,#1D,C2
+0156 80C6            242                      SJMP COLMN1
+0158                 243              C2:
+0158 80CE            244                      SJMP COLMN2
+                     245     
+015A                 246     FOUND:           
+015A 315D            247             ACALL adjustKeyNumber 
+015C 22              248             RET
+                     249               
+015D                 250     adjustKeyNumber:                 
+015D EA              251              MOV A,R2
+015E 75F003          252              MOV B,#3D
+0161 A4              253              MUL AB
+0162 FA              254              MOV R2,A
+0163 E8              255              MOV A,R0
+A51 MACRO ASSEMBLER  FINAL                                                                12/17/2019 01:10:15 PAGE     5
+
+0164 2401            256              ADD A,#1D
+0166 2A              257              ADD A,R2
+0167                 258          ZERO:
+0167 B40B02          259                     CJNE A,#11D,RETURN               
+016A 7400            260                     MOV A,#0D
+016C                 261              RETURN:
+016C 11FA            262                     ACALL DELAY              
+016E 22              263              RET
+                     264              
+016F                 265     ISR:             
+016F 7F01            266             MOV R7,#01H              
+0171 22              267             RET              
+                     268     
+                     269     END  
+A51 MACRO ASSEMBLER  FINAL                                                                12/17/2019 01:10:15 PAGE     6
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ABOVE. . . . . . .  C ADDR   00D3H   A   
+ADJUSTKEYNUMBER. .  C ADDR   015DH   A   
+AGAIN. . . . . . .  C ADDR   004BH   A   
+ANGLE0 . . . . . .  C ADDR   007BH   A   
+ANGLE135 . . . . .  C ADDR   009CH   A   
+ANGLE180 . . . . .  C ADDR   00A7H   A   
+ANGLE225 . . . . .  C ADDR   00B2H   A   
+ANGLE270 . . . . .  C ADDR   00BDH   A   
+ANGLE315 . . . . .  C ADDR   00C8H   A   
+ANGLE45. . . . . .  C ADDR   0086H   A   
+ANGLE90. . . . . .  C ADDR   0091H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   00FCH   A   
+C0 . . . . . . . .  C ADDR   014EH   A   
+C1 . . . . . . . .  C ADDR   0153H   A   
+C2 . . . . . . . .  C ADDR   0158H   A   
+CHECK. . . . . . .  C ADDR   0078H   A   
+COLMN0 . . . . . .  C ADDR   0114H   A   
+COLMN1 . . . . . .  C ADDR   011EH   A   
+COLMN2 . . . . . .  C ADDR   0128H   A   
+DELAY. . . . . . .  C ADDR   00FAH   A   
+FORMNUM. . . . . .  C ADDR   00DFH   A   
+FOUND. . . . . . .  C ADDR   015AH   A   
+GETKEY . . . . . .  C ADDR   0111H   A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+ISR. . . . . . . .  C ADDR   016FH   A   
+L1 . . . . . . . .  C ADDR   0107H   A   
+MAIN . . . . . . .  C ADDR   0006H   A   
+NEXT . . . . . . .  C ADDR   014EH   A   
+NXT1 . . . . . . .  C ADDR   004FH   A   
+NXT2 . . . . . . .  C ADDR   006FH   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+PSW. . . . . . . .  D ADDR   00D0H   A   
+READP0 . . . . . .  C ADDR   0011H   A   
+RETURN . . . . . .  C ADDR   016CH   A   
+ROW0 . . . . . . .  C ADDR   0132H   A   
+ROW1 . . . . . . .  C ADDR   0139H   A   
+ROW2 . . . . . . .  C ADDR   0140H   A   
+ROW3 . . . . . . .  C ADDR   0147H   A   
+ROWS . . . . . . .  C ADDR   0132H   A   
+SWITCH1. . . . . .  C ADDR   0016H   A   
+SWITCH2. . . . . .  C ADDR   0052H   A   
+SWITCH3. . . . . .  C ADDR   0072H   A   
+TCON . . . . . . .  D ADDR   0088H   A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+ZERO . . . . . . .  C ADDR   0167H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

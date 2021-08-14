@@ -1,0 +1,61 @@
+A51 MACRO ASSEMBLER  TEST                                                                 12/05/2019 17:25:47 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\test.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE test.asm SET(SMALL) DEBUG PRINT(.\Listings\test.lst) OBJECT(.\Objects\t
+                      est.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 00H
+0000 740C              2     Main:Mov A,#0CH  
+0002 F5A0              3     MOV P2,A
+0004 111A              4     Acall Delay
+0006 7406              5     Mov A,#06H      
+0008 F5A0              6     MOV P2,A
+000A 111A              7     Acall Delay
+000C 7403              8     Mov A,#03H    
+000E F5A0              9     MOV P2,A
+0010 111A             10     Acall Delay
+0012 7409             11     Mov A,#09H    
+0014 F5A0             12     MOV P2,A
+0016 111A             13     Acall Delay
+0018 80E6             14     SJMP Main
+001A                  15     Delay :
+001A 7F64             16     mov R7,#100D
+001C                  17     back :
+001C 758901           18     mov TMOD ,#01H
+001F 758CDB           19     mov TH0 ,#0DBH
+0022 758AFF           20     mov TL0 ,#0FFH
+0025 D28C             21     SETB TCON.4 
+0027 308DFD           22     L1:JNB TCON.5,L1
+002A C28C             23     CLR TCON.4
+002C C28D             24     CLR TCON.5
+002E DFEC             25     DJNZ R7 ,back
+0030 22               26     RET
+                      27     
+                      28     END
+A51 MACRO ASSEMBLER  TEST                                                                 12/05/2019 17:25:47 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BACK . . . . . . .  C ADDR   001CH   A   
+DELAY. . . . . . .  C ADDR   001AH   A   
+L1 . . . . . . . .  C ADDR   0027H   A   
+MAIN . . . . . . .  C ADDR   0000H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+TCON . . . . . . .  D ADDR   0088H   A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
